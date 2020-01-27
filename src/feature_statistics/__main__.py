@@ -1,8 +1,12 @@
 import dash_html_components as html
 import dash_core_components as dcc
 import plotly.graph_objects as go
+import dash_table
+import numpy as np
 from ..contants import colors
-from .common import true_ecdf, false_ecdf, false_interp, true_x_bar, true_y_bar, true_interp
+from .common import true_ecdf, false_ecdf, false_interp, true_x_bar, true_y_bar
+from .common import true_interp, false_interp, false_x_bar, false_y_bar
+from .common import p_value, ks_statistic
 
 trace = go.Sunburst(
     ids=[

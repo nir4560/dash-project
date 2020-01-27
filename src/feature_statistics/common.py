@@ -1,4 +1,5 @@
 from statsmodels.distributions.empirical_distribution import ECDF
+from scipy.stats import ks_2samp
 
 import numpy as np
 
@@ -37,3 +38,5 @@ else:
     # there are more true samples than false
     false_interp = np.interp(true_ecdf.x, false_ecdf.x, false_ecdf.y)
     true_interp = true_ecdf.y
+
+ks_statistic, p_value = ks_2samp(false_around_gt, true_around_gt)

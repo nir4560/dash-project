@@ -1,6 +1,6 @@
 import dash_html_components as html
 import dash_core_components as dcc
-from .common import feature_importance_graphs
+from .feature_importance_graphs import feature_importance_graphs
 from .fig import fig
 
 model_performance = html.Div(

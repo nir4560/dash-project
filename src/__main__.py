@@ -3,14 +3,10 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
 import pandas as pd
-import dash_table
-from sklearn import datasets
-from sklearn.model_selection import train_test_split
-from scipy.stats import ks_2samp
 from .contants import color_a, color_b, color_c, color_d, color_e, colors
 from .header import header
-from .feature_statistics import layout as feature_statistics
-from .model_performance import layout as model_performance
+from .model_performance import model_performance
+from .feature_statistics import feature_statistics
 import plotly.graph_objects as go
 
 describe_df = pd.DataFrame({
@@ -24,7 +20,6 @@ describe_df = pd.DataFrame({
 # If the K-S statistic is small or the p-value is high, then we cannot reject the hypothesis that the distributions
 #  of the two samples are the same.
 # ------ not used anywhere!! ------
-ks_statistic, p_value = ks_2samp(false_around_gt, true_around_gt)
 
 # dash visualization
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
@@ -77,12 +72,3 @@ def get_relevant_column(value):
     } for i in ['index', value.lower()]], describe_df[['index',
                                                        value.lower()
                                                        ]].to_dict('records')
-
-
-iris = datasets.load_iris()
-X = iris.data
-y = iris.target
-X_train, X_test, y_train, y_test = train_test_split(X,
-                                                    y,
-                                                    test_size=0.2,
-                                                    random_state=42)
