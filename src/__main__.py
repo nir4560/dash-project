@@ -38,7 +38,8 @@ app.layout = html.Div([
                  dcc.Tab(label='Model Performance', value='tab-2'),
              ]),
     html.Div(id='tabs-content')
-])
+],
+                      style={"padding": "1em"})
 
 
 @app.callback(Output('tabs-content', 'children'), [Input('tabs', 'value')])

@@ -1,10 +1,21 @@
+import dash_html_components as html
 import dash_core_components as dcc
 from .common import true_ecdf, false_ecdf, false_interp, true_x_bar, true_y_bar
 from .common import true_interp, false_interp, false_x_bar, false_y_bar
 from ..contants import colors
 
+# you can add as many charts as you like as long as you add the chartStyle to them
+# if the number of charts is odd the last one will expand to fill the space
+chartStyle = {
+    "margin": "1em",
+    "min-width": "40%",
+    "flex": "1",
+    "boxShadow": "1em 1em 0.5em 0 rgba(0,0,0,0.15)",
+    "background": "white"
+}
+
 kde_graph = dcc.Graph(id='kde graph',
-                      className='six columns',
+                      style=chartStyle,
                       figure={
                           'data': [
                               {
@@ -37,7 +48,7 @@ kde_graph = dcc.Graph(id='kde graph',
                       })
 
 ecdf_graph = dcc.Graph(id='ecdf graph',
-                       className='six columns',
+                       style=chartStyle,
                        figure={
                            'data': [
                                {
@@ -70,7 +81,7 @@ ecdf_graph = dcc.Graph(id='ecdf graph',
                        })
 
 qq_graph = dcc.Graph(id='qq graph',
-                     className='six columns',
+                     style=chartStyle,
                      figure={
                          'data': [
                              {
@@ -100,4 +111,13 @@ qq_graph = dcc.Graph(id='qq graph',
                                  'color': colors['text']
                              }
                          }
+                     })
+
+# should export a div with all the graphs
+graphsBox = html.Div(children=[kde_graph, ecdf_graph, qq_graph],
+                     style={
+                         "display": "flex",
+                         "flex-flow": "wrap",
+                         "flex-wrap": "wrap",
+                         "margin": "-1em"
                      })

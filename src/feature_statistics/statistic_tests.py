@@ -28,6 +28,8 @@ pVal = html.P([
 
 statistic_tests = html.Div(
     id='statistic tests',
-    style={'marginTop': '170px'},
-    className='four columns',
+    style={
+        "display": "flex",
+        'flexDirection': 'column',
+    },
     children=[statistical_significance, ksTestPVal, pVal])
