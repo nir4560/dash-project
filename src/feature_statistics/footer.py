@@ -3,6 +3,7 @@ import dash_table
 import dash_html_components as html
 import plotly.graph_objects as go
 from .statistic_tests import statistic_tests
+from ..contants import boxStyle
 
 trace = go.Sunburst(
     ids=[
@@ -26,10 +27,7 @@ layout = go.Layout(hovermode='closest',
 
 nullsPie = html.Div(
     id='nulls pie',
-    style={
-        "background": "white",
-        "padding": "1em"
-    },
+    style=boxStyle,
     children=[dcc.Graph(id='graph', figure=go.Figure([trace], layout))])
 
 tabularData = html.Div(id='tabular data',
@@ -53,9 +51,7 @@ tabularData = html.Div(id='tabular data',
 
 rightSide = html.Div(children=[tabularData, statistic_tests],
                      style={
-                         "display": "flex",
-                         "marginLeft": "1em",
-                         "background": "white",
+                         **boxStyle, "display": "flex",
                          "padding": "1em",
                          "flexDirection": "column"
                      })

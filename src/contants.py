@@ -4,5 +4,11 @@ color_c = '#d6e3f8'
 color_d = '#fef5ef'
 color_e = '#e4bb97'
 
-
 colors = {'background': '#f9f9f9', 'text': '#7FDBFF'}
+
+boxStyle = {
+    "background": "white",
+    "borderRadius": "1em",
+    "margin": "1em",
+    "boxShadow": "1em 1em 0.5em 0 rgba(0,0,0,0.15)",
+}

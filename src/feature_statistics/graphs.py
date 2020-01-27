@@ -2,16 +2,14 @@ import dash_html_components as html
 import dash_core_components as dcc
 from .common import true_ecdf, false_ecdf, false_interp, true_x_bar, true_y_bar
 from .common import true_interp, false_interp, false_x_bar, false_y_bar
-from ..contants import colors
+from ..contants import colors, boxStyle
 
 # you can add as many charts as you like as long as you add the chartStyle to them
 # if the number of charts is odd the last one will expand to fill the space
 chartStyle = {
-    "margin": "1em",
+    **boxStyle,
     "min-width": "40%",
     "flex": "1",
-    "boxShadow": "1em 1em 0.5em 0 rgba(0,0,0,0.15)",
-    "background": "white"
 }
 
 kde_graph = dcc.Graph(id='kde graph',
