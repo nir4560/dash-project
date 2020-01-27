@@ -14,6 +14,7 @@ from sklearn.model_selection import train_test_split
 from xgboost import XGBClassifier
 import plotly.graph_objects as go
 from scipy.stats import ks_2samp
+from .contants import color_a, color_b, color_c, color_d, color_e
 
 # generate data
 mu = 0
@@ -429,5 +430,3 @@ second_layout = html.Div(
                  className='row',
                  children=feature_importance_graphs[3:])
     ])
-
-
