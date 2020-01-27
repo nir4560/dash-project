@@ -10,7 +10,7 @@ import base64
 import pickle
 from sklearn.metrics import confusion_matrix
 from sklearn import datasets
-from sklearn.cross_validation import train_test_split
+from sklearn.model_selection import train_test_split
 from xgboost import XGBClassifier
 import plotly.graph_objects as go
 from scipy.stats import ks_2samp
@@ -112,7 +112,7 @@ trace = go.Sunburst(
     marker={"line": {"width": 2}},
 )
 layout = go.Layout(hovermode='closest'
-                   ,margin=go.layout.Margin(t=50, l=0, r=0, b=0)
+                   , margin=go.layout.Margin(t=50, l=0, r=0, b=0)
                    )
 
 first_layout = html.Div(id='main div', children=[
@@ -123,80 +123,82 @@ first_layout = html.Div(id='main div', children=[
                      {'label': 'Feature #3', 'value': 'Feature #3'}
                  ],
                  value='Feature #1',
-                 style={'text-align': 'center'}
+                 style={'text-align': 'left'}
                  ),
-    html.Div(id='chosen feature', children='Feature #1 Ground Truth vs All', style={
-        'textAlign': 'center',
-        'color': colors['text']
+    html.H3(id='chosen feature', children='Feature #1 Performance', style={
+        'textAlign': 'center'
     }),
-    dcc.Graph(
-        id='kde graph',
-        figure={
-            'data': [
-                {'x': true_x_bar, 'y': true_y_bar,
-                 'type': 'bar', 'name': 'True Around GT'},
-                {'x': false_x_bar, 'y': false_y_bar, 'type': 'bar',
-                 'name': 'False Around GT'},
-            ],
-            'layout': {
-                'xaxis': {'title': 'Distance(m)'},
-                'yaxis': {'title': 'Probability'},
-                'plot_bgcolor': colors['background'],
-                'paper_bgcolor': colors['background'],
-                'title': 'Kernels Density Estimations',
-                'font': {
-                    'color': colors['text']
+    html.Div(id='first graphs row', style={'margin-bottom': '30px'}, className='row', children=[
+        dcc.Graph(
+            id='kde graph',
+            className='six columns',
+            figure={
+                'data': [
+                    {'x': true_x_bar, 'y': true_y_bar,
+                     'type': 'bar', 'name': 'True Around GT'},
+                    {'x': false_x_bar, 'y': false_y_bar, 'type': 'bar',
+                     'name': 'False Around GT'},
+                ],
+                'layout': {
+                    'xaxis': {'title': 'Distance(m)'},
+                    'yaxis': {'title': 'Probability'},
+                    'plot_bgcolor': colors['background'],
+                    'paper_bgcolor': colors['background'],
+                    'title': 'Kernels Density Estimations',
+                    'font': {
+                        'color': colors['text']
+                    }
                 }
             }
-        }
-    )
-    ,
-    dcc.Graph(
-        id='ecdf graph',
-        figure={
-            'data': [
-                {'x': true_ecdf.x, 'y': true_ecdf.y,
-                 'type': 'lines', 'name': 'True Around GT'},
-                {'x': false_ecdf.x, 'y': false_ecdf.y, 'type': 'lines',
-                 'name': 'False Around GT'},
-            ],
-            'layout': {
-                'xaxis': {'title': 'Distance(m)'},
-                'yaxis': {'title': 'Empirical CDF'},
-                'plot_bgcolor': colors['background'],
-                'paper_bgcolor': colors['background'],
-                'title': 'ECDF Curves',
-                'font': {
-                    'color': colors['text']
+        )
+        ,
+        dcc.Graph(
+            id='ecdf graph',
+            className='six columns',
+            figure={
+                'data': [
+                    {'x': true_ecdf.x, 'y': true_ecdf.y,
+                     'type': 'lines', 'name': 'True Around GT'},
+                    {'x': false_ecdf.x, 'y': false_ecdf.y, 'type': 'lines',
+                     'name': 'False Around GT'},
+                ],
+                'layout': {
+                    'xaxis': {'title': 'Distance(m)'},
+                    'yaxis': {'title': 'Empirical CDF'},
+                    'plot_bgcolor': colors['background'],
+                    'paper_bgcolor': colors['background'],
+                    'title': 'ECDF Curves',
+                    'font': {
+                        'color': colors['text']
+                    }
                 }
             }
-        }
-    )
+        )])
     ,
-
-    dcc.Graph(
-        id='qq graph',
-        figure={
-            'data': [
-                {'x': false_interp, 'y': true_interp,
-                 'type': 'scatter', 'name': 'True Around GT'},
-                {'x': false_interp, 'y': false_interp, 'type': 'lines',
-                 'name': 'False Around GT'},
-            ],
-            'layout': {
-                'xaxis': {'title': 'False Quantiles'},
-                'yaxis': {'title': 'True Quantiles'},
-                'plot_bgcolor': colors['background'],
-                'paper_bgcolor': colors['background'],
-                'title': 'Q-Q Plot',
-                'font': {
-                    'color': colors['text']
+    html.Div(id='second graphs row', className='row', children=[
+        dcc.Graph(
+            id='qq graph',
+            className='six columns',
+            figure={
+                'data': [
+                    {'x': false_interp, 'y': true_interp,
+                     'type': 'scatter', 'name': 'True Around GT'},
+                    {'x': false_interp, 'y': false_interp, 'type': 'lines',
+                     'name': 'False Around GT'},
+                ],
+                'layout': {
+                    'xaxis': {'title': 'False Quantiles'},
+                    'yaxis': {'title': 'True Quantiles'},
+                    'plot_bgcolor': colors['background'],
+                    'paper_bgcolor': colors['background'],
+                    'title': 'Q-Q Plot',
+                    'font': {
+                        'color': colors['text']
+                    }
                 }
             }
-        }
-    )
+        )])
     ,
-
     html.Div(id='tabular data, nulls pie and statistics', className="row",
              children=[
                  html.Div(id='tabular data', style={'margin-top': '85px'},
@@ -244,7 +246,7 @@ first_layout = html.Div(id='main div', children=[
 @app.callback(output=Output(component_id='chosen feature', component_property='children'),
               inputs=[Input(component_id='select feature dropdown', component_property='value')])
 def get_title_by_value(value):
-    return f"{value} Ground Truth vs All"
+    return f"{value} Performance"
 
 
 @app.callback(output=[Output(component_id='describe df', component_property='columns'),
