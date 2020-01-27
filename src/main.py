@@ -15,6 +15,7 @@ from xgboost import XGBClassifier
 import plotly.graph_objects as go
 from scipy.stats import ks_2samp
 
+
 # generate data
 mu = 0
 sigma = 100
@@ -67,7 +68,7 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 app.config['suppress_callback_exceptions'] = True
 
 colors = {
-    'background': '#111111',
+    'background': '#f9f9f9',
     'text': '#7FDBFF'
 }
 
