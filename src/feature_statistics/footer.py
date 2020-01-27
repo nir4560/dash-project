@@ -32,20 +32,24 @@ nullsPie = html.Div(
 
 tabularData = html.Div(id='tabular data',
                        style={
-                           'textAlign': 'center',
+                           'textAlign': 'left',
                            "marginBottom": "1em",
                        },
                        children=[
                            dash_table.DataTable(id='describe df',
                                                 style_header={
-                                                    'backgroundColor':
-                                                    'rgb(30, 30, 30)',
+                                                    "textTransform":
+                                                    "capitalize",
+                                                    'backgroundColor': 'white',
+                                                    'textAlign': "inherit",
                                                     'fontWeight': 'bold',
+                                                    "paddingLeft": "2ch"
                                                 },
                                                 style_cell={
-                                                    'backgroundColor':
-                                                    'rgb(50, 50, 50)',
-                                                    'color': 'white',
+                                                    "paddingLeft": "2ch",
+                                                    'backgroundColor': 'white',
+                                                    'color': '#666',
+                                                    'textAlign': "inherit"
                                                 })
                        ])
 
@@ -61,5 +65,5 @@ footer = html.Div(children=[nullsPie, rightSide],
                       "display": "flex",
                       "marginTop": "2em",
                       "justifyContent": "center",
-                      "alignItems": "flex-end"
+                      "alignItems": "stretch"
                   })

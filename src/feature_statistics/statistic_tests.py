@@ -2,7 +2,11 @@ import dash_html_components as html
 import numpy as np
 from .common import p_value, ks_statistic
 
-basicStyle = {'border': '3px solid black', 'textAlign': 'center'}
+basicStyle = {
+    'border': '1px solid #ccc',
+    'textAlign': 'center',
+    "padding": "0.5em 2ch"
+}
 
 statistical_significance = html.P([
     html.I("H0"), ": There is no statistical significance between samples.",
