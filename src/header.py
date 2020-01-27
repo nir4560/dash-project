@@ -17,7 +17,7 @@ header = [
             style={
                 'margin': 0,
                 'padding': '10px',
-                'background-color': colors['background'],
+                'backgroundColor': colors['background'],
                 'textAlign': 'center',
                 'color': colors['text']
             })

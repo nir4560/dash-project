@@ -4,9 +4,8 @@ import plotly.graph_objects as go
 import dash_table
 import numpy as np
 from ..contants import colors
-from .common import true_ecdf, false_ecdf, false_interp, true_x_bar, true_y_bar
-from .common import true_interp, false_interp, false_x_bar, false_y_bar
 from .common import p_value, ks_statistic
+from .graphs import qq_graph, kde_graph, ecdf_graph
 
 trace = go.Sunburst(
     ids=[
@@ -43,148 +42,46 @@ feature_statistics = html.Div(
                          'value': 'Feature #3'
                      }],
                      value='Feature #1',
-                     style={'text-align': 'left'}),
+                     style={'textAlign': 'left'}),
         html.H3(id='chosen feature',
                 children='Feature #1 Performance',
                 style={'textAlign': 'center'}),
         html.Div(id='first graphs row',
-                 style={'margin-bottom': '30px'},
+                 style={'marginBottom': '30px'},
                  className='row',
-                 children=[
-                     dcc.Graph(id='kde graph',
-                               className='six columns',
-                               figure={
-                                   'data': [
-                                       {
-                                           'x': true_x_bar,
-                                           'y': true_y_bar,
-                                           'type': 'bar',
-                                           'name': 'True Around GT'
-                                       },
-                                       {
-                                           'x': false_x_bar,
-                                           'y': false_y_bar,
-                                           'type': 'bar',
-                                           'name': 'False Around GT'
-                                       },
-                                   ],
-                                   'layout': {
-                                       'xaxis': {
-                                           'title': 'Distance(m)'
-                                       },
-                                       'yaxis': {
-                                           'title': 'Probability'
-                                       },
-                                       'plot_bgcolor': colors['background'],
-                                       'paper_bgcolor': colors['background'],
-                                       'title': 'Kernels Density Estimations',
-                                       'font': {
-                                           'color': colors['text']
-                                       }
-                                   }
-                               }),
-                     dcc.Graph(id='ecdf graph',
-                               className='six columns',
-                               figure={
-                                   'data': [
-                                       {
-                                           'x': true_ecdf.x,
-                                           'y': true_ecdf.y,
-                                           'type': 'lines',
-                                           'name': 'True Around GT'
-                                       },
-                                       {
-                                           'x': false_ecdf.x,
-                                           'y': false_ecdf.y,
-                                           'type': 'lines',
-                                           'name': 'False Around GT'
-                                       },
-                                   ],
-                                   'layout': {
-                                       'xaxis': {
-                                           'title': 'Distance(m)'
-                                       },
-                                       'yaxis': {
-                                           'title': 'Empirical CDF'
-                                       },
-                                       'plot_bgcolor': colors['background'],
-                                       'paper_bgcolor': colors['background'],
-                                       'title': 'ECDF Curves',
-                                       'font': {
-                                           'color': colors['text']
-                                       }
-                                   }
-                               })
-                 ]),
-        html.Div(id='second graphs row',
-                 className='row',
-                 children=[
-                     dcc.Graph(id='qq graph',
-                               className='six columns',
-                               figure={
-                                   'data': [
-                                       {
-                                           'x': false_interp,
-                                           'y': true_interp,
-                                           'type': 'scatter',
-                                           'name': 'True Around GT'
-                                       },
-                                       {
-                                           'x': false_interp,
-                                           'y': false_interp,
-                                           'type': 'lines',
-                                           'name': 'False Around GT'
-                                       },
-                                   ],
-                                   'layout': {
-                                       'xaxis': {
-                                           'title': 'False Quantiles'
-                                       },
-                                       'yaxis': {
-                                           'title': 'True Quantiles'
-                                       },
-                                       'plot_bgcolor': colors['background'],
-                                       'paper_bgcolor': colors['background'],
-                                       'title': 'Q-Q Plot',
-                                       'font': {
-                                           'color': colors['text']
-                                       }
-                                   }
-                               })
-                 ]),
+                 children=[kde_graph, ecdf_graph]),
+        html.Div(id='second graphs row', className='row', children=[qq_graph]),
         html.Div(
             id='tabular data, nulls pie and statistics',
             className="row",
             children=[
-                html.Div(
-                    id='tabular data',
-                    style={'margin-top': '85px'},
-                    className='four columns',
-                    children=[
-                        dash_table.DataTable(id='describe df',
-                                             style_header={
-                                                 'backgroundColor':
-                                                 'rgb(30, 30, 30)',
-                                                 'fontWeight': 'bold',
-                                                 'textAlign': 'center'
-                                             },
-                                             style_cell={
-                                                 'backgroundColor':
-                                                 'rgb(50, 50, 50)',
-                                                 'color': 'white',
-                                                 'textAlign': 'center'
-                                             })
-                    ]),
-                html.Div(
-                    id='nulls pie',
-                    className='four columns',
-                    children=[
-                        dcc.Graph(id='graph',
-                                  figure=go.Figure([trace], layout))
-                    ]),
+                html.Div(id='tabular data',
+                         style={'marginTop': '85px'},
+                         className='four columns',
+                         children=[
+                             dash_table.DataTable(id='describe df',
+                                                  style_header={
+                                                      'backgroundColor':
+                                                      'rgb(30, 30, 30)',
+                                                      'fontWeight': 'bold',
+                                                      'textAlign': 'center'
+                                                  },
+                                                  style_cell={
+                                                      'backgroundColor':
+                                                      'rgb(50, 50, 50)',
+                                                      'color': 'white',
+                                                      'textAlign': 'center'
+                                                  })
+                         ]),
+                html.Div(id='nulls pie',
+                         className='four columns',
+                         children=[
+                             dcc.Graph(id='graph',
+                                       figure=go.Figure([trace], layout))
+                         ]),
                 html.Div(
                     id='statistic tests',
-                    style={'margin-top': '170px'},
+                    style={'marginTop': '170px'},
                     className='four columns',
                     children=[
                         html.P([
@@ -195,7 +92,7 @@ feature_statistics = html.Div(
                         ],
                                style={
                                    'border': '3px solid black',
-                                   'text-align': 'center'
+                                   'textAlign': 'center'
                                }),
                         html.P(
                             [
@@ -205,8 +102,8 @@ feature_statistics = html.Div(
                             ],
                             style={
                                 'border': '3px solid black',
-                                'text-align': 'center',
-                                'background-color': 'coral'
+                                'textAlign': 'center',
+                                'backgroundColor': 'coral'
                             }),
                         html.P(
                             [
@@ -216,8 +113,8 @@ feature_statistics = html.Div(
                             ],
                             style={
                                 'border': '3px solid black',
-                                'text-align': 'center',
-                                'background-color': 'MediumAquaMarine'
+                                'textAlign': 'center',
+                                'backgroundColor': 'MediumAquaMarine'
                             })
                     ])
             ])
