@@ -4,6 +4,7 @@ from dash.dependencies import Input, Output
 from ..app import app
 from .graphs import graphsBox
 from .footer import footer
+from .common import getFeature
 
 dropDown = dcc.Dropdown(id='select_feature_dropdown',
                         options=[{
@@ -33,4 +34,5 @@ feature_statistics = html.Div(id='main div',
                         component_property='value')
               ])
 def getContent(value):
-    return [graphsBox(value), footer(value)]
+    feature_data = getFeature(value)
+    return [graphsBox(feature_data), footer(feature_data)]

@@ -25,12 +25,12 @@ trace = go.Sunburst(
 layout = go.Layout(hovermode='closest',
                    margin=go.layout.Margin(t=50, l=0, r=0, b=0))
 
-nullsPie = html.Div(
+nullsPie = lambda feature_data: html.Div(
     id='nulls pie',
     style=boxStyle,
     children=[dcc.Graph(id='graph', figure=go.Figure([trace], layout))])
 
-tabularData = html.Div(
+tabularData = lambda feature_data: html.Div(
     id='tabular data',
     style={
         "margin": "1em",
@@ -53,22 +53,23 @@ tabularData = html.Div(
                              })
     ])
 
-rightSide = html.Div(children=[tabularData, statistic_tests],
-                     style={
-                         **boxStyle, "display": "flex",
-                         "padding": "1em",
-                         "flexDirection": "column"
-                     })
+rightSide = lambda feature_data: html.Div(
+    children=[tabularData(feature_data),
+              statistic_tests(feature_data)],
+    style={
+        **boxStyle, "display": "flex",
+        "padding": "1em",
+        "flexDirection": "column"
+    })
 
-
-def footer(feature):
-    print(f"footer {feature}")
-    # the rest of the components should be functions as well,
-    # this way you can pass them data/filtering properties
-    return html.Div(children=[nullsPie, tabularData, statistic_tests],
-                    style={
-                        "display": "flex",
-                        "marginTop": "2em",
-                        "justifyContent": "center",
-                        "alignItems": "stretch"
-                    })
+footer = lambda feature_data: html.Div(children=[
+    nullsPie(feature_data),
+    tabularData(feature_data),
+    statistic_tests(feature_data)
+],
+                                       style={
+                                           "display": "flex",
+                                           "marginTop": "2em",
+                                           "justifyContent": "center",
+                                           "alignItems": "stretch"
+                                       })
