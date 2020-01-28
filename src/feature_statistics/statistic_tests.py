@@ -1,6 +1,7 @@
 import dash_html_components as html
 import numpy as np
 from .common import p_value, ks_statistic
+from ..contants import boxStyle
 
 basicStyle = {
     'border': '1px solid #ccc',
@@ -33,6 +34,7 @@ pVal = html.P([
 statistic_tests = html.Div(
     id='statistic tests',
     style={
+        "margin": "1em",
         "display": "flex",
         'flexDirection': 'column',
     },

@@ -30,28 +30,28 @@ nullsPie = html.Div(
     style=boxStyle,
     children=[dcc.Graph(id='graph', figure=go.Figure([trace], layout))])
 
-tabularData = html.Div(id='tabular data',
-                       style={
-                           'textAlign': 'left',
-                           "marginBottom": "1em",
-                       },
-                       children=[
-                           dash_table.DataTable(id='describe df',
-                                                style_header={
-                                                    "textTransform":
-                                                    "capitalize",
-                                                    'backgroundColor': 'white',
-                                                    'textAlign': "inherit",
-                                                    'fontWeight': 'bold',
-                                                    "paddingLeft": "2ch"
-                                                },
-                                                style_cell={
-                                                    "paddingLeft": "2ch",
-                                                    'backgroundColor': 'white',
-                                                    'color': '#666',
-                                                    'textAlign': "inherit"
-                                                })
-                       ])
+tabularData = html.Div(
+    id='tabular data',
+    style={
+        "margin": "1em",
+        "flex": "1",
+        'textAlign': 'left',
+        #    "padding": "1em"
+    },
+    children=[
+        dash_table.DataTable(id='describe df',
+                             style_header={
+                                 "textTransform": "capitalize",
+                                 'textAlign': "inherit",
+                                 'fontWeight': 'bold',
+                                 "paddingLeft": "2ch"
+                             },
+                             style_cell={
+                                 "background": "transparent",
+                                 "paddingLeft": "2ch",
+                                 'textAlign': "inherit"
+                             })
+    ])
 
 rightSide = html.Div(children=[tabularData, statistic_tests],
                      style={
@@ -60,7 +60,7 @@ rightSide = html.Div(children=[tabularData, statistic_tests],
                          "flexDirection": "column"
                      })
 
-footer = html.Div(children=[nullsPie, rightSide],
+footer = html.Div(children=[nullsPie, tabularData, statistic_tests],
                   style={
                       "display": "flex",
                       "marginTop": "2em",
