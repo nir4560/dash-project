@@ -1,4 +1,3 @@
-import dash
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
@@ -8,6 +7,7 @@ from .header import header
 from .model_performance import model_performance
 from .feature_statistics import feature_statistics
 import plotly.graph_objects as go
+from .app import app
 
 describe_df = pd.DataFrame({
     'feature #1': [2, 4, 8, 0],
@@ -21,21 +21,14 @@ describe_df = pd.DataFrame({
 #  of the two samples are the same.
 # ------ not used anywhere!! ------
 
-# dash visualization
-external_stylesheets = [
-    'https://codepen.io/chriddyp/pen/bWLwgP.css', "./assets/x.css"
-]
-
-app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
-app.config['suppress_callback_exceptions'] = True
-
 app.layout = html.Div([
     html.Div(id='main div', children=header),
     dcc.Tabs(id="tabs",
-             value='tab-1',
+             value='featureStatistics',
              children=[
-                 dcc.Tab(label='Feature Statistics', value='tab-1'),
-                 dcc.Tab(label='Model Performance', value='tab-2'),
+                 dcc.Tab(label='Feature Statistics',
+                         value='featureStatistics'),
+                 dcc.Tab(label='Model Performance', value='modelPerformance'),
              ]),
     html.Div(id='tabs-content')
 ],
@@ -44,20 +37,10 @@ app.layout = html.Div([
 
 @app.callback(Output('tabs-content', 'children'), [Input('tabs', 'value')])
 def render_content(tab):
-    if tab == 'tab-1':
+    if tab == 'featureStatistics':
         return feature_statistics
-    elif tab == 'tab-2':
+    elif tab == 'modelPerformance':
         return model_performance
-
-
-@app.callback(output=Output(component_id='chosen feature',
-                            component_property='children'),
-              inputs=[
-                  Input(component_id='select feature dropdown',
-                        component_property='value')
-              ])
-def get_title_by_value(value):
-    return f"{value} Performance"
 
 
 @app.callback(output=[

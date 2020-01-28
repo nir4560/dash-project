@@ -111,11 +111,14 @@ qq_graph = dcc.Graph(id='qq graph',
                          }
                      })
 
+
 # should export a div with all the graphs
-graphsBox = html.Div(children=[kde_graph, ecdf_graph, qq_graph],
-                     style={
-                         "display": "flex",
-                         "flex-flow": "wrap",
-                         "flex-wrap": "wrap",
-                         "margin": "-1em"
-                     })
+def graphsBox(feature):
+    print(f"graphBox {feature}")
+    return html.Div(children=[kde_graph, ecdf_graph, qq_graph],
+                    style={
+                        "display": "flex",
+                        "flex-flow": "wrap",
+                        "flex-wrap": "wrap",
+                        "margin": "-1em"
+                    })

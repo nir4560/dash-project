@@ -60,10 +60,13 @@ rightSide = html.Div(children=[tabularData, statistic_tests],
                          "flexDirection": "column"
                      })
 
-footer = html.Div(children=[nullsPie, tabularData, statistic_tests],
-                  style={
-                      "display": "flex",
-                      "marginTop": "2em",
-                      "justifyContent": "center",
-                      "alignItems": "stretch"
-                  })
+
+def footer(feature):
+    print(f"footer {feature}")
+    return html.Div(children=[nullsPie, tabularData, statistic_tests],
+                    style={
+                        "display": "flex",
+                        "marginTop": "2em",
+                        "justifyContent": "center",
+                        "alignItems": "stretch"
+                    })
