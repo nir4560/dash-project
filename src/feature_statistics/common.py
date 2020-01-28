@@ -1,5 +1,6 @@
 from statsmodels.distributions.empirical_distribution import ECDF
 from scipy.stats import ks_2samp
+import pandas as pd
 
 import numpy as np
 
@@ -48,7 +49,6 @@ def getFeature(feature_id):
         true_interp = true_ecdf.y
 
     ks_statistic, p_value = ks_2samp(false_around_gt, true_around_gt)
-
     return {
         "ks_statistic": ks_statistic,
         "p_value": p_value,
@@ -63,3 +63,10 @@ def getFeature(feature_id):
         "false_y_bar": false_y_bar,
         "false_x_bar": false_x_bar,
     }
+
+
+describe_df = pd.DataFrame({
+    'feature #1': [2, 4, 8, 0],
+    'feature #2': [2, 0, 0, 0],
+    'feature #3': [10, 2, 1, 8]
+}).describe().reset_index()

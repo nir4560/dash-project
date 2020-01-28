@@ -1,9 +1,9 @@
 import dash_core_components as dcc
-import dash_table
 import dash_html_components as html
 import plotly.graph_objects as go
 from .statistic_tests import statistic_tests
 from ..contants import boxStyle
+from .table import table
 
 trace = go.Sunburst(
     ids=[
@@ -30,28 +30,13 @@ nullsPie = lambda feature_data: html.Div(
     style=boxStyle,
     children=[dcc.Graph(id='graph', figure=go.Figure([trace], layout))])
 
-tabularData = lambda feature_data: html.Div(
-    id='tabular data',
-    style={
-        "margin": "1em",
-        "flex": "1",
-        'textAlign': 'left',
-        #    "padding": "1em"
-    },
-    children=[
-        dash_table.DataTable(id='describe df',
-                             style_header={
-                                 "textTransform": "capitalize",
-                                 'textAlign': "inherit",
-                                 'fontWeight': 'bold',
-                                 "paddingLeft": "2ch"
-                             },
-                             style_cell={
-                                 "background": "transparent",
-                                 "paddingLeft": "2ch",
-                                 'textAlign': "inherit"
-                             })
-    ])
+tabularData = lambda feature_data: html.Div(id='tabular data',
+                                            style={
+                                                "margin": "1em",
+                                                "flex": "1",
+                                                'textAlign': 'left',
+                                            },
+                                            children=[table])
 
 rightSide = lambda feature_data: html.Div(
     children=[tabularData(feature_data),

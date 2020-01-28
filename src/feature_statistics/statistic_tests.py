@@ -3,9 +3,10 @@ import numpy as np
 from ..contants import boxStyle
 
 basicStyle = {
-    'border': '1px solid #ccc',
+    'border': '1px solid #666',
     'textAlign': 'center',
-    "padding": "0.5em 2ch"
+    "padding": "0.5em 2ch",
+    "borderRadius": "0.5em"
 }
 
 statistical_significance = lambda feature_data: html.P([

@@ -18,7 +18,10 @@ dropDown = dcc.Dropdown(id='select_feature_dropdown',
                             'value': 'Feature #3'
                         }],
                         value='Feature #1',
-                        style={'textAlign': 'left'})
+                        style={
+                            'textAlign': 'left',
+                            'marginBottom': '1em'
+                        })
 
 content_container = html.Div(id="feature_statistics_content",
                              style={"display": "static"})
