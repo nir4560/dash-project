@@ -112,9 +112,10 @@ qq_graph = dcc.Graph(id='qq graph',
                      })
 
 
-# should export a div with all the graphs
 def graphsBox(feature):
     print(f"graphBox {feature}")
+    # the rest of the components should be functions as well,
+    # this way you can pass them data/filtering properties
     return html.Div(children=[kde_graph, ecdf_graph, qq_graph],
                     style={
                         "display": "flex",

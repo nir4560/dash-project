@@ -63,6 +63,8 @@ rightSide = html.Div(children=[tabularData, statistic_tests],
 
 def footer(feature):
     print(f"footer {feature}")
+    # the rest of the components should be functions as well,
+    # this way you can pass them data/filtering properties
     return html.Div(children=[nullsPie, tabularData, statistic_tests],
                     style={
                         "display": "flex",
